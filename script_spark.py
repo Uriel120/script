@@ -107,7 +107,9 @@ result = combined_data.agg(
 
 json_content = result.toJSON().collect()[0]
 
+json_content_bytes = json_content.encode('utf-8')
+
 object_name = f"{FOLDER_NAME}/poluant_{datetime.now()}.json"
 print("about to save")
-minio_client.put_object(BUCKET_NAME, object_name, io.BytesIO(json_content), len(json_content), content_type="application/json")
+minio_client.put_object(BUCKET_NAME, object_name, io.BytesIO(json_content), len(json_content_bytes), content_type="application/json")
 print("save finish")
