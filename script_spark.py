@@ -57,6 +57,8 @@ objects_in_window = [obj.object_name for obj in objects if
 
 data_frames = []
 
+print("etablish connection")
+
 # Parcours des fichiers dans la fenêtre temporelle
 for object_name in objects_in_window:
     # Charger le fichier JSON depuis Minio
@@ -91,6 +93,8 @@ for object_name in objects_in_window:
 # combined_data = data_frames[0].union(*data_frames[1:])
 combined_data = reduce(DataFrame.union, data_frames)
 
+print("combinaison finish")
+
 result = combined_data.agg(
     avg("CO").alias("avg_CO"),
     avg("T").alias("avg_T"),
@@ -105,4 +109,6 @@ result = combined_data.agg(
 json_content = result.toJSON().collect()[0]
 
 object_name = f"{FOLDER_NAME}/poluant_{datetime.now()}.json"
+print("about to save")
 minio_client.put_object(BUCKET_NAME, object_name, io.BytesIO(json_content), len(json_content), content_type="application/json")
+print("save finish")
