@@ -50,7 +50,7 @@ schema = StructType([
 
 objects = minio_client.list_objects('aq54bucket', recursive=True)
 objects_in_window = [obj.object_name for obj in objects if
-                     datetime.strptime(obj.object_name.split('_')[1].split('.')[0], '%Y-%m-%d %H:%M:%S', 'poluant%Y-%m-%d %H:%M:%S')]
+                     datetime.strptime(obj.object_name.split('_')[1].split('.')[0], '%Y-%m-%d %H:%M:%S')]
 # objects_in_window = [obj for obj in objects if
 #                      datetime.strptime(obj.split('_')[1].split('.')[0], '%Y-%m-%d %H:%M:%S')]
 
